@@ -104,6 +104,11 @@ h3 {
     display: table-row;
 }
 
+
+.medicine .table {
+    width: auto;
+}
+
 input.invalid {
     border-color: #DD2C00;
 }

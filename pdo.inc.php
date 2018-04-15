@@ -13,4 +13,10 @@ if (strpos($_SERVER["CONTEXT_DOCUMENT_ROOT"], "xampp") > 0) {
     $dbname = 'macmanu_groupB';
 }
 
+try{
+    $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
+
 ?>

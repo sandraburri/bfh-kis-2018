@@ -25,7 +25,6 @@ if(!$logged){
 
   try {
     // Connect to the database
-    $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     // if the username is set, test if combination "username/password" is valid
     if($user !=''){
       // Initialise SQL query with place holders (:username and :password)
@@ -55,8 +54,6 @@ if(!$logged){
   }
   catch(PDOException $e)
     {
-
-      /*** echo the sql statement and error message ***/
       echo $e->getMessage();
     }
 }

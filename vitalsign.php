@@ -11,19 +11,17 @@ if(!isset($_SESSION['user'])){
 
 include('pdo.inc.php');
 include("_header.php");
+include("_patientName.php");
+
+    echo " Vitalzeichen:<br> <br>\n";
 
 try {
-    $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     if(isset($_POST['signID'])){
    var_dump($_POST);
         $signID = $_POST['signID'];
         $patientID = $_POST['patientID'];
         $value = $_POST['value'];
         $show = $_POST['show'];
-
-        if ($signID == "4") {
-            $value = $_POST['bp_lower'] . '/' . $_POST['bp_upper'];
-        }
 
         $sql = "INSERT INTO `vital_sign`
         (`vital_signID`, `patientID`, `signID`, `value`, `time`, `note`)
@@ -36,7 +34,7 @@ try {
         $statement0->bindParam(':value', $value, PDO::PARAM_STR);
         $result0 = $statement0->execute();
 
-        header("Location: viewPatient.php?id=$patientID&show=$show");
+        header("Location: vitalsign.php?id=$patientID&show=$show");
     }
 
     $patientID=0;
@@ -47,22 +45,6 @@ try {
     if(isset($_GET['show'])){
       $show = ($_GET['show']);
     }
-
-    if($patientID >0){
-
-      $sql0 = "SELECT name, first_name
-        FROM patient
-        WHERE patient.patientID = :patientID";
-
-    $statement0 = $dbh->prepare($sql0);
-    $statement0->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-    $result0 = $statement0->execute();
-
-    while($line = $statement0->fetch()){
-      echo "<h1> Patient: ".$line['first_name']."  ".$line['name']."</h1>";
-      echo " Vitalzeichen:<br> <br>\n";
-    }
-
       /*** echo a message saying we have connected ***/
       $sql = "SELECT name, first_name, value, time, sign_name
                 FROM patient, vital_sign, sign
@@ -147,10 +129,25 @@ try {
     echo '</div>';
 
     echo '<div class="pulse">';
-    echo '<form method="POST">';
-    echo 'Neuer Puls erfassen:<br /> <br />';
-    echo 'Wert: <input type="text" name="value" /> <br /> <br />';
-    echo '<input type="submit" value="speichern" id="speichern" class="btn btn-violet" /> <br />';
+    echo '<form method="POST" id="pulse_form" class="form-horizontal">';
+    echo '<h3>Neuer Puls erfassen:</h3>';
+    echo '<div class="form-group row">';
+    echo '  <label for="pulse_value" class="col-sm-2 col-form-label">Wert:</label>';
+    echo '  <div class="col-sm-10">';
+    echo '  <input ';
+    echo '    type="text"';
+    echo '    name="value"';
+    echo '    id="pulse_value"';
+    echo '    class="form-control"';
+    echo '    autocomplete=off';
+    echo '    required';
+    echo '    pattern="^[0-9]{2}"';
+    echo '    />';
+    echo '  <div class="validation-message" id="pulse_value_error">Bitte Puls im Format DD eingeben, z.B. 88</div>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<input type="submit" value="speichern" id="pulse_submit" class="btn btn-violet" /> <br />';
     echo '<input type="hidden" value="2" name="signID" />';
     echo '<input type="hidden" value="pulse" name="show" />';
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
@@ -158,46 +155,44 @@ try {
     echo '</div>';
 
     echo '<div class="blood_pressure">';
-    echo '<form method="POST">';
-    echo 'Neuer Blutdruck erfassen:<br /> <br />';
-    echo 'Wert: <input type="text" name="bp_lower" value="" placeholder="unterer" /> /';
-    echo '<input type="text" name="bp_upper" value="" placeholder="oberer"/> <br /> <br />';
-    echo '<input type="submit" value="speichern" id="speichern" class="btn btn-violet" /> <br />';
-    echo '<input type="hidden" val  ue="4" name="signID" />';
+    echo '<form method="POST" id="blood_pressure_form" class="form-horizontal">';
+    echo '<h3>Neuer Blutdruck erfassen:</h3>';
+    echo '<div class="form-group row">';
+    echo '  <label for="blood_pressure_value" class="col-sm-2 col-form-label">Wert:</label>';
+    echo '  <div class="col-sm-10">';
+    echo '  <input ';
+    echo '    type="text"';
+    echo '    name="value"';
+    echo '    id="blood_pressure_value"';
+    echo '    class="form-control"';
+    echo '    autocomplete=off';
+    echo '    required';
+    echo '    pattern="^[0-9]{2,3}/[0-9]{2,3}$"';
+    echo '    />';
+    echo '  <div class="validation-message" id="blood_pressure_value_error">Bitte Blutdruck im Format DD/DDD eingeben, z.B. 80/120</div>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<input type="submit" value="speichern" id="blood_pressure_submit" class="btn btn-violet" /> <br />';
+    echo '<input type="hidden" value="4" name="signID" />';
     echo '<input type="hidden" value="blood_pressure" name="show" />';
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
     echo '</form>';
     echo '</div>';
 
     echo "</div>";
-    }
-    else{
-      echo "<h1>The patient does not exist</h1>";
+    
+        $dbh = null;
     }
 
-    $dbh = null;
-}
-catch(PDOException $e)
-{
-
-    /*** echo the sql statement and error message ***/
+catch(PDOException $e) {
     echo $e->getMessage();
 }
 ?>
 
-<h3 id="sign"> </h3>
-
+<i><a href="medicament.php?id=<?php echo $patientID ?>">zu den Medikamenten</a></i>
 <br />
-
-Medikamentenliste:
-<br />
-<br />
-<input type="button" value="Medikamente" id="Medicines" class="btn btn-violet" onclick="showMedicines(this);"/>
-<br />
-<br />
-
-<i><a href="listPatients.php">zurück</a></i>
-
+<i><a href="stammdaten.php?id=<?php echo $patientID ?>">zu den Stammdaten</a></i>
 
 <script type="text/javascript">
 
@@ -215,7 +210,6 @@ Medikamentenliste:
         document.getElementById('vital-signs').className = "vital-signs blood_pressure";
         signID = 4;
     }
-
 
     function validateTemparature() {
         var input = document.getElementById("temparature_value");
@@ -235,8 +229,45 @@ Medikamentenliste:
     }
 
     validateTemparature();
+    
+    function validatePulse() {
+        var input = document.getElementById("pulse_value");
+        var error = document.getElementById("pulse_value_error");
+        var submit = document.getElementById("pulse_submit");
+
+        function validate(event) {
+            event.preventDefault();
+            error.style.display = event.target.validity.valid ? 'none' : 'block';
+            submit.disabled = !event.target.validity.valid;
+        }
+
+        input.addEventListener('invalid', validate);
+        input.addEventListener('change', validate);
+        input.addEventListener('keyup', validate);
+        submit.disabled = true;
+    }
+    
+    validatePulse();
+    
+    function validateBlood_pressure() {
+        var input = document.getElementById("blood_pressure_value");
+        var error = document.getElementById("blood_pressure_value_error");
+        var submit = document.getElementById("blood_pressure_submit");
+
+        function validate(event) {
+            event.preventDefault();
+            error.style.display = event.target.validity.valid ? 'none' : 'block';
+            submit.disabled = !event.target.validity.valid;
+        }
+
+        input.addEventListener('invalid', validate);
+        input.addEventListener('change', validate);
+        input.addEventListener('keyup', validate);
+        submit.disabled = true;
+    }
+
+    validateBlood_pressure();
 
 </script>
-
 
 <?php include("_footer.php"); ?>
