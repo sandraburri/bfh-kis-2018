@@ -139,3 +139,12 @@ input.invalid {
     border-color: #5d198e;
     opacity: 0.4;
 }
+
+.quantity{
+    width: 50px;
+}
+
+.time{
+    white-space: nowrap;
+}
+

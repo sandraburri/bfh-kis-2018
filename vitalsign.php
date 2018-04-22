@@ -121,7 +121,7 @@ try {
     echo '</div>';
     echo '</div>';
 
-    echo '<input type="submit" value="speichern" id="temparature_submit" class="btn btn-violet" /> <br />';
+    echo '<input type="submit" value="speichern" id="temparature_submit" class="btn btn-violet" /> <br><br />';
     echo '<input type="hidden" value="1" name="signID" />';
     echo '<input type="hidden" value="temperature" name="show" />';
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
@@ -147,7 +147,7 @@ try {
     echo '</div>';
     echo '</div>';
 
-    echo '<input type="submit" value="speichern" id="pulse_submit" class="btn btn-violet" /> <br />';
+    echo '<input type="submit" value="speichern" id="pulse_submit" class="btn btn-violet" /> <br><br />';
     echo '<input type="hidden" value="2" name="signID" />';
     echo '<input type="hidden" value="pulse" name="show" />';
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
@@ -173,7 +173,7 @@ try {
     echo '</div>';
     echo '</div>';
 
-    echo '<input type="submit" value="speichern" id="blood_pressure_submit" class="btn btn-violet" /> <br />';
+    echo '<input type="submit" value="speichern" id="blood_pressure_submit" class="btn btn-violet" /> <br><br />';
     echo '<input type="hidden" value="4" name="signID" />';
     echo '<input type="hidden" value="blood_pressure" name="show" />';
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
