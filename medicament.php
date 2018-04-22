@@ -2,10 +2,8 @@
 
 session_start();
 
-// First, we test if user is logged. If not, goto main.php (login page).
 if(!isset($_SESSION['user'])){
   header("Location:     main.php");
-  //echo "problem with user";
   exit();
 }
 
@@ -95,7 +93,7 @@ try {
             `time`
         DESC";
 
-    $statement = $dbh->prepare($sql);
+    $statement = $dbh->prepare($sql); // Warum wird hier nur die PatientenId gebunden und nicht alle, welche in der Tabelle verwendet werden?
     $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
     $result = $statement->execute();
 
@@ -126,15 +124,17 @@ try {
         echo '<td class="staffID_physician"> '.$line['physician'].' </td>';
         echo '</tr>';
     }
-
     echo '</tbody>';
     echo '<table>';
     
-    echo 'Medikament hinzufügen:';
+    
+    echo 'Medikament hinzufügen:'; // was mache ich hier noch falsch? Habe es versucht mit einem div darum, dann funktionierte gar nix mehr
+    // so wird nur der Pfeil angezeigt aber keine Selection....
+    // Extern von diesem phpBlock finde ich nicht logisch, denn dann müsste ich ja alle Abfragen noch einmal schreiben, möchte eigentlich die bereits existierenden Abfragen verwenden...
     echo '<table cellpadding="0" summary="neues Medikament">';
         echo '<tr>';
             echo '<td>';
-                echo '<select name="selectionfield1">';
+                echo '<select name="medicament_name">';
                     echo '<option class="medicament_name"> '.$line['medicament_name'].' </option>';
                 echo '</select>';
             echo '</td>';
