@@ -9,7 +9,7 @@
     <link href="project.css" type="text/css" rel="stylesheet" />
     <link href="css/animate.css" type="text/css" rel="stylesheet" />
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.1.221/js/jquery.min.js"></script>
 </head>
 
 <body class="main">

@@ -4,7 +4,19 @@
 */
 
 .login-form {
-    width: 600px;
+    width: 800px;
+}
+
+.medicament-form {
+    width: 800px;
+}
+
+.staff-form {
+    width: 800px;
+}
+
+.patient-form {
+    width: 800px;
 }
 
 h1 {

@@ -204,13 +204,12 @@ try {
 
     echo '</table>';
     
-    echo '<input type="submit" value="speichern" id="temparature_submit" class="btn btn-violet" /><br />';
+    echo '<input type="submit" value="speichern" id="medicine_submit" class="btn btn-violet" /><br><br />';
     
     echo '<input type="hidden" value="'.$patientID.'" name="patientID" />';
     echo '</form>';
 
     echo '</div>';
-
 
         $dbh = null;
     }
@@ -222,7 +221,8 @@ catch(PDOException $e) {
 <i><a href="vitalsign.php?id=<?php echo $patientID ?>">zu den Vitalzeichen</a></i>
 <br />
 <i><a href="stammdaten.php?id=<?php echo $patientID ?>">zu den Stammdaten</a></i>
-
+<br />
+<i><a href="listPatients.php">zur Patientenliste</a></i>
 
 <script type="text/javascript">
 
@@ -244,7 +244,6 @@ catch(PDOException $e) {
     }
     
     validateQuantity();
-
 
 </script>
 

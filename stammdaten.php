@@ -63,7 +63,7 @@ catch(PDOException $e) {
 <br />
 <i><a href="medicament.php?id=<?php echo $patientID ?>">zu den Medikamenten</a></i>
 <br />
-<i><a href="listPatients.php">zurück</a></i>
+<i><a href="listPatients.php">zur Patientenliste</a></i>
 
 
 <?php include("_footer.php"); ?>
