@@ -13,7 +13,7 @@ include('pdo.inc.php');
 include("_header.php");
 include("_patientName.php");
 
-    echo " Stammdaten:<br> <br>\n";
+    echo '<h2>Stammdaten:<br></h2>';
 
 try{
     
@@ -25,7 +25,7 @@ SELECT *
 FROM patient
 WHERE patientID = :patient_id
 EOT;
-// EOT  fasst einen mehrzeiligen String zusammen; die Abfrage in dieser Aufgabe
+    // EOT  fasst einen mehrzeiligen String zusammen; die Abfrage in dieser Aufgabe
 
     $stmt = $dbh->prepare($patientenDaten);
     $stmt->bindParam(":patient_id", $patientID, PDO::PARAM_INT);
@@ -64,6 +64,5 @@ catch(PDOException $e) {
 <i><a href="medicament.php?id=<?php echo $patientID ?>">zu den Medikamenten</a></i>
 <br />
 <i><a href="listPatients.php">zur Patientenliste</a></i>
-
 
 <?php include("_footer.php"); ?>
