@@ -15,7 +15,7 @@
     $result0 = $statement0->execute();
 
     while($line = $statement0->fetch()){
-      echo "<h1> Patient: ".$line['first_name']."  ".$line['name']."</h1>";
+      echo "<h1> Patient: ".$line['name']."  ".$line['first_name']."</h1>";
     }
     }
 

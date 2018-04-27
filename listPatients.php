@@ -19,7 +19,7 @@ try {
 
     while($line = $result->fetch()){
       echo "<a href='stammdaten.php?id=".$line['patientID']."'>";
-      echo $line['first_name']." ".$line['name'];
+      echo $line['name']." ".$line['first_name'];
       echo "</a><br>\n";
     }
 }
