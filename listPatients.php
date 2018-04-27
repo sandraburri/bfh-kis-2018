@@ -22,14 +22,12 @@ try {
       echo $line['first_name']." ".$line['name'];
       echo "</a><br>\n";
     }
-
 }
+
 catch(PDOException $e)
 {
     echo $e->getMessage();
 }
-
-
 ?>
 
 <?php include("_footer.php"); ?>
