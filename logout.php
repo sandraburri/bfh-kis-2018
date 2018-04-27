@@ -3,7 +3,6 @@ include("_header.php");
 session_start();
 
 unset($_SESSION['user']);
-
+unset($_SESSION['functionID']);
+ header("Location: main.php");
 ?>
-<h1>Logout done</h1>
-<a href="main.php">Zurück zur Loginseite</a>
