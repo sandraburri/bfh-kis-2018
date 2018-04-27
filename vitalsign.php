@@ -13,7 +13,7 @@ include('pdo.inc.php');
 include("_header.php");
 include("_patientName.php");
 
-    echo " Vitalzeichenübersicht: <br><br>\n";
+    echo '<h2>Vitalzeichenübersicht:<br></h2>';
     
     echo "<div id='vitalsigns-chart'></div>";
 
