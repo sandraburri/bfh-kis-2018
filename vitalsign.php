@@ -182,7 +182,7 @@ try {
     echo '    class="form-control"';
     echo '    autocomplete=off';
     echo '    required';
-    echo '    pattern="^[0-9]{2}$"';
+    echo '    pattern="^[0-9]{2,3}$"';
     echo '    />';
     echo '  <div class="validation-message" id="pulse_value_error">Bitte Puls im Format DD eingeben, z.B. 88</div>';
     echo '</div>';

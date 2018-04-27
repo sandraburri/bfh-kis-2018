@@ -2,10 +2,8 @@
 
     session_start();
 
-    // First, we test if user is logged. If not, goto main.php (login page).
     if(!isset($_SESSION['user'])){
       header("Location:     main.php");
-      //echo "problem with user";
       exit();
     }
 
@@ -14,23 +12,41 @@
 
     if(isset($_POST['medicament_name'])){
         $medicament_name = $_POST['medicament_name'];
-        $unit = $_POST['unit'];
 
         $sql = "INSERT INTO `medicament`
-        (`medicamentID`, `medicament_name`, `unit`)
+        (`medicamentID`, `medicament_name`)
         VALUES
-        (NULL, :medicament_name, :unit)";
+        (NULL, :medicament_name)";
 
         $statement0 = $dbh->prepare($sql);
         $statement0->bindParam(':medicament_name', $medicament_name, PDO::PARAM_STR);
-        $statement0->bindParam(':unit', $unit, PDO::PARAM_STR);
         $result0 = $statement0->execute();
+    }
+
+    echo '<h2>Medikamentenliste</h2>';
+    
+    $sql = "SELECT
+            medicamentID,
+            medicament_name
+        FROM
+            medicament
+        ORDER BY
+            `medicament_name`
+        ASC    ";
+        
+            $statement = $dbh->prepare($sql);
+            $result = $statement->execute();    
+
+        while($line = $statement->fetch()){
+           $medicament = $line['medicament_name'];
+           echo $medicament; 
+           echo '<br/>';
     }
 ?>
 
 <div class="medicament-form">
 
-Neue Medikamente erfassen:<br> <br>
+    <h2><br> Neues Medikament erfassen:<br></h2>
 
 <div>
     <form method="POST" class="form-horizontal">
@@ -46,27 +62,11 @@ Neue Medikamente erfassen:<br> <br>
                 autocomplete=off
                 required
                 />
-                <div class="validation-message" id="medicament_name_error">Bitte Medikament eingeben, z.B. Ponstan Filmtabs 500mg</div>
+                <div class="validation-message" id="medicament_name_error">Bitte Medikament eingeben, z.B. Ponstan 500mg Filmtabs </div>
             </div>
         </div>
         
-        <div class="form-group row">
-          <label for="unit" class="col-sm-3 col-form-label">Verabreichungs-Menge:</label>
-          <div class="col-sm-9">
-              <input 
-                type="text"
-                name="unit"
-                id="unit"
-                class="form-control"
-                autocomplete=off
-                required
-                pattern="^[0-9]{1,2}$"
-                />
-                <div class="validation-message" id="unit_error">Verabreichungs-Menge im Format DD eingeben, z.B. 10</div>
-            </div>
-        </div>
-
-         <input type="submit" value="speichern" class="btn btn-violet" id="submit"/>
+        <input type="submit" value="speichern" class="btn btn-violet" id="submit"/>
 
     </form>
     </div>
@@ -107,12 +107,10 @@ Neue Medikamente erfassen:<br> <br>
 
         function updateState() {
             medicamentName.error.style.display = medicamentName.valid ? 'none' : 'block';
-            unit.error.style.display = unit.valid ? 'none' : 'block';
-            submit.disabled = !medicamentName.valid || !unit.valid;
+            submit.disabled = !medicamentName.valid;
         }
         
         var medicamentName = createValidator("medicament_name");
-        var unit = createValidator("unit");
     })();
 
 </script>
