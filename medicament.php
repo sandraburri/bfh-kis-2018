@@ -55,9 +55,6 @@ include("_patientName.php");
         $nurses[$line['staffID']] = $line['name'];
     }
     
-    
-    
-    
 try {
 
     $patientID=0;
@@ -84,9 +81,6 @@ try {
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
     $result = $statement->execute();
-
-    
-
 
     echo '<h2>Medikamentenübersicht:<br></h2>';
     echo '<div id="medicine" class="medicine">';
@@ -121,7 +115,6 @@ try {
         var_dump($e); 
     }
 
-
      echo '<h2><br>Details:<br></h2>';
 
 try {
@@ -130,7 +123,6 @@ try {
     if(isset($_GET['id'])){
       $patientID = (int)($_GET['id']);
     }
-
     
     $sql = "
         SELECT
