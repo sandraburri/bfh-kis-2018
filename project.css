@@ -4,19 +4,19 @@
 */
 
 .login-form {
-    width: 800px;
+    max-width: 800px;
 }
 
 .medicament-form {
-    width: 800px;
+    max-width: 800px;
 }
 
 .staff-form {
-    width: 800px;
+    max-width: 800px;
 }
 
 .patient-form {
-    width: 800px;
+    max-width: 800px;
 }
 
 h1 {
@@ -170,4 +170,43 @@ tr.inline-form .validation-message {
     top: 48px;
     left: 10px;
     width: 300px;
+}
+
+.my-nav {
+    background: #ddd;
+    margin: 20px 0 20px 0;
+    border-radius: 0;
+    padding: 4px;
+    list-style: none;
+}
+
+.my-nav li.nav-item {
+    display: inline-block;
+    border-right: 1px solid #333;
+}
+
+.my-nav li.nav-item:last-of-type {
+    border-right: none;
+}
+
+.my-nav .nav-link {
+    padding: 0 10px 0 5px;
+    font-size: 13px;
+    color: #000;
+}
+
+.my-nav .active > .nav-link {
+    font-weight: bold;
+}
+
+.table td, .table th {
+    padding: .3rem;
+}
+
+.table h2 {
+    margin: 20px 0 5px 0;
+}
+
+.table .form-control.quantity {
+    height: 26px;
 }
