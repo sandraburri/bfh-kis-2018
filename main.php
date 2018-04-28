@@ -28,20 +28,20 @@ if(!$logged){
     // if the username is set, test if combination "username/password" is valid
     if($user !=''){
         // Initialise SQL query with place holders (:username and :password)
-        $sql0 = "SELECT staff.staffID, staff.username, first_name, hashed_password, functionID
+        $sql = "SELECT staff.staffID, staff.username, first_name, hashed_password, functionID
         FROM staff,credential
         WHERE staff.staffID = credential.staffID AND staff.username=:username AND hashed_password=sha(:password)";
         // parse the query and set the parameters for place holders.
-        $statement0 = $dbh->prepare($sql0);
-        $statement0->bindParam(':username', $user, PDO::PARAM_STR);
-        $statement0->bindParam(':password', $pwd, PDO::PARAM_STR);
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':username', $user, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $pwd, PDO::PARAM_STR);
         
         
         // execute the query
-        $result0 = $statement0->execute();
+        $result = $stmt->execute();
         
         // case if login was a success
-        if($line = $statement0->fetch()){
+        if($line = $stmt->fetch()){
             echo "<h1> staff : ".$line['staffID']."  ".$line['username']." ".$line['hashed_password']."</h1>\n";
             $logged=true;
             
