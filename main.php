@@ -47,6 +47,7 @@ if(!$logged){
             
             $functionId = $line['functionID'];
             $_SESSION['user'] = $line['username'];
+            $_SESSION['staffID'] = $line['staffID'];
             $_SESSION['functionID'] = $functionId;
 
             if ($functionId == 1 || $functionId == 2){
