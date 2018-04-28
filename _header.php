@@ -6,7 +6,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link href="project.css" type="text/css" rel="stylesheet" />
+    <link href="css/project.css" type="text/css" rel="stylesheet" />
+    <script src="js/project.js"></script>
+    
     <link href="css/animate.css" type="text/css" rel="stylesheet" />
 
     <script src="https://kendo.cdn.telerik.com/2018.1.221/js/jquery.min.js"></script>
