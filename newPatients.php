@@ -62,11 +62,11 @@
         while($line = $stmt->fetch()){
            $name = $line['name'];
            $firstName = $line['first_name'];
-                echo '<tr>';
-        echo '<td> '.$line['name'].' </td>';
-        echo '<td> '.$line['first_name'].' </td>';
-        echo '</tr>'; 
-    }
+            echo '<tr>';
+            echo '<td> '.$line['name'].' </td>';
+            echo '<td> '.$line['first_name'].' </td>';
+            echo '</tr>'; 
+        }
     
         echo '</tbody>';
         echo '</table>';
