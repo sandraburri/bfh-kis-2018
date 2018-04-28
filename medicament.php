@@ -23,16 +23,16 @@ if(isset($_POST['medicamentID'])){
             VALUES
                 (NULL, CURRENT_TIMESTAMP, :quantity, :medicamentID, :patientID, :staffID_nurse, :staffID_physician, '')";
 
-        $statement = $dbh->prepare($sql);
-        $statement->bindParam(':quantity', $quantity, PDO::PARAM_STR);
-        $statement->bindParam(':medicamentID', $medicamentID, PDO::PARAM_INT);
-        $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-        $statement->bindParam(':staffID_nurse', $nurse, PDO::PARAM_INT);
-        $statement->bindParam(':staffID_physician', $physician, PDO::PARAM_INT);
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $stmt->bindParam(':medicamentID', $medicamentID, PDO::PARAM_INT);
+        $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+        $stmt->bindParam(':staffID_nurse', $nurse, PDO::PARAM_INT);
+        $stmt->bindParam(':staffID_physician', $physician, PDO::PARAM_INT);
         
-        $result = $statement->execute();
+        $result = $stmt->execute();
         if (!$result) {
-            $error = $statement->errorInfo()[2];
+            $error = $stmt->errorInfo()[2];
             echo $error;
             die();
         }
@@ -47,11 +47,11 @@ if(isset($_POST['medicamentID'])){
 include("_header.php");
 include("_patientName.php");
 
-    $statement = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 1");
-    $result = $statement->execute();
+    $stmt = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 1");
+    $result = $stmt->execute();
     $nurses = array();
     
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $nurses[$line['staffID']] = $line['name'];
     }
     
@@ -78,9 +78,9 @@ try {
             `medicament_name`
         ASC    ";
         
-    $statement = $dbh->prepare($sql);
-    $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-    $result = $statement->execute();
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+    $result = $stmt->execute();
 
     echo '<h2>Verschriebene Medikamente:</h2>';
     echo '<div id="medicine" class="medicine">';
@@ -98,7 +98,7 @@ try {
 
     $medicaments = array();
 
-    while($line = $statement->fetch()){        
+    while($line = $stmt->fetch()){        
         $medicament = $line['medicament_name'];
         $medicaments[$line['medicamentID']] = $medicament;
 
@@ -145,9 +145,9 @@ try {
             `time`
         DESC";
 
-    $statement = $dbh->prepare($sql);
-    $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-    $result = $statement->execute();
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+    $result = $stmt->execute();
 
     echo '<form method="POST" id="quantity_form" class="form-horizontal">';
 
@@ -162,7 +162,7 @@ try {
     echo '</thead>';
     echo '<tbody>';
 
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $class = $line['medicament_name'];
         $class = strtolower($class);
         $class = str_replace(' ', '_', $class);
