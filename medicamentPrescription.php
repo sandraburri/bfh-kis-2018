@@ -123,7 +123,9 @@ try {
             echo '<td>';
                 echo '<select name="physician">';
                 foreach ($physicians as $id => $name) {
-                    echo '<option value="'.$id.'"> '.$name.' </option>';
+                    $selected = $_SESSION['staffID'] == $id ? ' selected="selected"' : '';
+
+                    echo '<option value="'.$id.'"'.$selected.'> '.$name.' </option>';
                 }
                 echo '</select>';
             echo '</td>';
@@ -146,14 +148,6 @@ catch(PDOException $e) {
 
         $dbh = null;
 ?>
-
-<i><a href="medicament.php?id=<?php echo $patientID ?>">zu den Medikamenten</a></i>
-<br />
-<i><a href="vitalsign.php?id=<?php echo $patientID ?>">zu den Vitalzeichen</a></i>
-<br />
-<i><a href="stammdaten.php?id=<?php echo $patientID ?>">zu den Stammdaten</a></i>
-<br />
-<i><a href="listPatients.php">zur Patientenliste</a></i>
 
 <script type="text/javascript">
 
