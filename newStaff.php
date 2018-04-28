@@ -68,16 +68,17 @@
         WHERE
             staff.functionID = function.functionID
         ORDER BY
-            `name`
-        ASC    ";
+            `function_name`,
+            `name`            
+        ASC";
         
-            $statement = $dbh->prepare($sql);
-            $result = $statement->execute();
+            $stmt = $dbh->prepare($sql);
+            $result = $stmt->execute();
             
-        echo '<table>';
+        echo '<table class="table">';
             echo '<tbody>';
 
-        while($line = $statement->fetch()){
+        while($line = $stmt->fetch()){
            $name = $line['name'];
            $firstName = $line['first_name'];
            $functionName = $line['function_name'];
@@ -178,48 +179,6 @@
         var submit = document.getElementById("submit");
         submit.disabled = true;
 
-        function createValidator(name) {
-            var input = document.getElementById(name);
-            var error = document.getElementById(name + "_error");
-
-            var x = {
-                input: input,
-                error: error,
-                valid: false
-            };
-            
-            function handleEvent(event) {
-                event.preventDefault();
-                x.valid = event.target.validity.valid;
-                updateState();
-            }
-
-            input.addEventListener('invalid', handleEvent);
-            input.addEventListener('change', handleEvent);
-            input.addEventListener('keyup', handleEvent);
-
-            return x;
-        }
-        
-    function createRadioValidator(name) {
-            var input = $("[name="+name+"]");
-            var error = document.getElementById(name + "_error");
-
-            var x = {
-                input: input,
-                error: error,
-                valid: false
-            };
-            
-            function handleEvent(event) {
-                x.valid = $("[name=functionID").val() != "";
-                updateState();
-            }
-
-            input.on("change", handleEvent);
-            return x;
-        }
-
         function updateState() {
             username.error.style.display = username.valid ? 'none' : 'block';
             name.error.style.display = name.valid ? 'none' : 'block';
@@ -228,20 +187,10 @@
             submit.disabled = !username.valid || !name.valid || !firstName.valid || !functionID.valid;
         }
 
-        var username = createValidator("username");
-        var name = createValidator("name");
-        var firstName = createValidator("first_name");
-        var functionID = createRadioValidator("functionID");
-        
-                    $(".radio-group input").click(function(){
-                    var doc = [];
-                    $(".radio-group input:checked").each(function(index) {
-                        var id = $(this).closest(".radio-group").attr('_id');
-                        doc.push(id);
-                    });
-                    console.log(doc);
-    
-});
+        var username = createValidator("username", updateState);
+        var name = createValidator("name", updateState);
+        var firstName = createValidator("first_name", updateState);
+        var functionID = createRadioValidator("functionID", updateState);
         
     })();
 
