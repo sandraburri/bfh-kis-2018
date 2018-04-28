@@ -22,15 +22,15 @@
                 VALUES
                     (NULL, CURRENT_TIMESTAMP, :quantity, :medicamentID, :patientID, null, :staffID_physician, '')";
 
-            $statement = $dbh->prepare($sql);
-            $statement->bindParam(':quantity', $quantity, PDO::PARAM_STR);
-            $statement->bindParam(':medicamentID', $medicamentID, PDO::PARAM_INT);
-            $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-            $statement->bindParam(':staffID_physician', $physician, PDO::PARAM_INT);
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+            $stmt->bindParam(':medicamentID', $medicamentID, PDO::PARAM_INT);
+            $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+            $stmt->bindParam(':staffID_physician', $physician, PDO::PARAM_INT);
             
-            $result = $statement->execute();
+            $result = $stmt->execute();
             if (!$result) {
-                $error = $statement->errorInfo()[2];
+                $error = $stmt->errorInfo()[2];
                 echo $error;
             }
 
@@ -41,19 +41,19 @@
         }
     }
 
-    $statement = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 1");
-    $result = $statement->execute();
+    $stmt = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 1");
+    $result = $stmt->execute();
     $nurses = array();
     
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $nurses[$line['staffID']] = $line['name'];
     }
 
-    $statement = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 2");
-    $result = $statement->execute();
+    $stmt = $dbh->prepare("SELECT staffID, name FROM `staff` where functionid = 2");
+    $result = $stmt->execute();
     $physicians = array();
     
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $physicians[$line['staffID']] = $line['name'];
     }
 
@@ -68,11 +68,11 @@ try {
     }
 
     $sql = "SELECT * FROM `medicament` ORDER BY `medicament`.`medicament_name` ASC";
-    $statement = $dbh->prepare($sql);
-    $result = $statement->execute();    
+    $stmt = $dbh->prepare($sql);
+    $result = $stmt->execute();    
 
     $medicaments = array();
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $medicaments[$line['medicamentID']] = $line['medicament_name'];
     }
     
