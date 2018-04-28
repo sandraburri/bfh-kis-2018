@@ -6,15 +6,15 @@
     
     if($patientID >0){
 
-      $sql0 = "SELECT name, first_name
+      $sql = "SELECT name, first_name
         FROM patient
         WHERE patient.patientID = :patientID";
 
-    $statement0 = $dbh->prepare($sql0);
-    $statement0->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-    $result0 = $statement0->execute();
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+    $result = $stmt->execute();
 
-    while($line = $statement0->fetch()){
+    while($line = $stmt->fetch()){
       echo "<h1> Patient: ".$line['name']."  ".$line['first_name']."</h1>";
     }
     }
