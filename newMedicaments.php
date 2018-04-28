@@ -18,9 +18,9 @@
         VALUES
         (NULL, :medicament_name)";
 
-        $statement0 = $dbh->prepare($sql);
-        $statement0->bindParam(':medicament_name', $medicament_name, PDO::PARAM_STR);
-        $result0 = $statement0->execute();
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':medicament_name', $medicament_name, PDO::PARAM_STR);
+        $result = $stmt->execute();
     }
 
     echo '<h2>Medikamentenliste</h2>';
@@ -34,10 +34,10 @@
             `medicament_name`
         ASC    ";
         
-            $statement = $dbh->prepare($sql);
-            $result = $statement->execute();    
+            $stmt = $dbh->prepare($sql);
+            $result = $stmt->execute();    
 
-        while($line = $statement->fetch()){
+        while($line = $stmt->fetch()){
            $medicament = $line['medicament_name'];
            echo $medicament; 
            echo '<br/>';
