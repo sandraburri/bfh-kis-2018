@@ -53,7 +53,7 @@ h3 {
 }
 
 .header #logo {
-    background: url("img/logo.png");
+    background: url("../img/logo.png");
     background-repeat: no-repeat;
     position: absolute;
     top: 4px;
@@ -199,8 +199,12 @@ tr.inline-form .validation-message {
     font-weight: bold;
 }
 
+.table {
+    width: auto;
+}
+
 .table td, .table th {
-    padding: .3rem;
+    padding: 2px 20px 2px 2px;
 }
 
 .table h2 {
