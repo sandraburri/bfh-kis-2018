@@ -111,9 +111,6 @@ try {
         } else {
             $slot = "$slot".'/2';
         }
-        
-        //var_dump($id, $time, $year, $month, $day, $hour, "===>", $slot);
-        //echo "<br/>";
 
         return $slot;
     }
@@ -231,12 +228,6 @@ catch(PDOException $e) {
 }
 ?>
 
-<i><a href="medicament.php?id=<?php echo $patientID ?>">zu den Medikamenten</a></i>
-<br />
-<i><a href="stammdaten.php?id=<?php echo $patientID ?>">zu den Stammdaten</a></i>
-<br />
-<i><a href="listPatients.php">zur Patientenliste</a></i>
-
 <script type="text/javascript">
 
     function showTemperatures(item) {
@@ -331,13 +322,21 @@ catch(PDOException $e) {
         Object.keys(points).forEach(function(key) {
             temperature.push(points[key].temperature);
             pulse.push(points[key].pulse);
-            categories  .push(key);
+            categories.push(key);
         });
 
     </script>
     <script>
-    function createChart() {
-        $("#vitalsigns-chart").kendoChart({
+    function createChart() {     
+    }
+
+    $(document).ready(function() {
+
+        var chart = $("#vitalsigns-chart").kendoChart({
+            chartArea: {
+                //width: 400,
+                height: 200
+            },
             title: {
                 text: ""
             },
@@ -377,10 +376,12 @@ catch(PDOException $e) {
                 template: "#= category #/03: #= value #"
             }
         });
-    }
 
-    $(document).ready(createChart);
-    $(document).bind("kendo:skinChange", createChart);
+        $(window).resize(function() {
+            chart.data("kendoChart").refresh();
+        });
+
+    });
 </script>
     
 <?php include("_footer.php"); ?>
