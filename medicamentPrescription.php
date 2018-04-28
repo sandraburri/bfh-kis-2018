@@ -146,7 +146,6 @@ catch(PDOException $e) {
         var_dump($e); 
     }
 
-        $dbh = null;
 ?>
 
 <script type="text/javascript">

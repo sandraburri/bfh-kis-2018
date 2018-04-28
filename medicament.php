@@ -228,8 +228,6 @@ catch(PDOException $e) {
     echo '</form>';
 
     echo '</div>';
-
-        $dbh = null;
 ?>
 
 <script type="text/javascript">

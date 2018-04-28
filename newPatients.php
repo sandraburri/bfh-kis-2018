@@ -16,31 +16,30 @@
         $MRN = $_POST['MRN'];
         $name = $_POST['name'];
         $first_name = $_POST['first_name'];
-        $gender = $POST['gender'];
-        $birthdate = $POST['birthdate'];
-        $diagnose = $POST['diagnose'];
+        $gender = $_POST['gender'];
+        $birthdate = $_POST['birthdate'];
+        $diagnose = $_POST['diagnose'];
 
         $sql = "INSERT INTO `patient`
         (`patientID`, `MRN`, `name`, `first_name`, `gender`, `birthdate`, `diagnose`)
         VALUES
-        (NULL, :MRN, :name, :first_name, , :gender, :birthdate, :diagnose)";
+        (NULL, :MRN, :name, :first_name, :gender, :birthdate, :diagnose)";
 
-        $statement = $dbh->prepare($sql);
-        $statement->bindParam(':MRN', $MRN, PDO::PARAM_INT);
-        $statement->bindParam(':name', $name, PDO::PARAM_STR);
-        $statement->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-        $statement->bindParam(':gender', $gender, PDO::PARAM_INT);
-        $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_INT);
-        $statement->bindParam(':diagnose', $diagnose, PDO::PARAM_STR);
-        $result = $statement->execute();
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':MRN', $MRN, PDO::PARAM_INT);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+        $stmt->bindParam(':gender', $gender, PDO::PARAM_INT);
+        $stmt->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
+        $stmt->bindParam(':diagnose', $diagnose, PDO::PARAM_STR);
+        $result = $stmt->execute();
+        
         if (!$result) {
             $error = $stmt->errorInfo()[2];
             echo $error;
-        }
-
-        // $staffID = $dbh->lastInsertId(); // weiss ich nicht genau was das macht, bitte erklären
-        
-        header("Location: newPatients.php");        
+        } else {
+            header("Location: newPatients.php");        
+        }       
     }
 
     echo '<h2>Patientenliste<br></h2>';
@@ -49,18 +48,18 @@
             name,
             first_name
         FROM
-            patients
+            patient
         ORDER BY
             `name`
         ASC    ";
         
-            $statement = $dbh->prepare($sql);
-            $result = $statement->execute();
+            $stmt = $dbh->prepare($sql);
+            $result = $stmt->execute();
             
-        echo '<table>';
+        echo '<table class="table">';
             echo '<tbody>';
 
-        while($line = $statement->fetch()){
+        while($line = $stmt->fetch()){
            $name = $line['name'];
            $firstName = $line['first_name'];
                 echo '<tr>';
@@ -82,6 +81,7 @@
 
         <div class="form-group row">
           <label for="MRN" class="col-sm-3 col-form-label">MRN-Nummer:</label>
+
           <div class="col-sm-9">
               <input 
                 type="text"
@@ -98,6 +98,7 @@
         
         <div class="form-group row">
           <label for="name" class="col-sm-3 col-form-label">Name:</label>
+
           <div class="col-sm-9">
               <input 
                 type="text"
@@ -113,6 +114,7 @@
         
         <div class="form-group row">
           <label for="first_name" class="col-sm-3 col-form-label">Vorname:</label>
+
           <div class="col-sm-9">
               <input 
                 type="text"
@@ -138,12 +140,13 @@
                   <input type="radio"name="gender" id="gender-f" class="custom-control-input" value="2">
                   <label class="custom-control-label" for="gender-f">F</label>
                   </div>
-                <div class="validation-message" id="functionID_error">Bitte Funktion wählen</div>
+                <div class="validation-message" id="gender_error">Bitte Geschlecht wählen</div>
             </div>
         </div>
         
         <div class="form-group row">
-          <label for="birthdate" class="col-sm-3 col-form-label">Geburtsdatum:</label>
+            <label for="birthdate" class="col-sm-3 col-form-label">Geburtsdatum:</label>
+
           <div class="col-sm-9">
               <input 
                 type="text"
@@ -159,7 +162,8 @@
         </div>
         
         <div class="form-group row">
-          <label for="diagnose" class="col-sm-3 col-form-label">Diagnose:</label>
+            <label for="diagnose" class="col-sm-3 col-form-label">Diagnose:</label>
+
           <div class="col-sm-9">
               <input 
                 type="text"
@@ -184,48 +188,6 @@
         var submit = document.getElementById("submit");
         submit.disabled = true;
 
-        function createValidator(name) {
-            var input = document.getElementById(name);
-            var error = document.getElementById(name + "_error");
-
-            var x = {
-                input: input,
-                error: error,
-                valid: false
-            };
-            
-            function handleEvent(event) {
-                event.preventDefault();
-                x.valid = event.target.validity.valid;
-                updateState();
-            }
-
-            input.addEventListener('invalid', handleEvent);
-            input.addEventListener('change', handleEvent);
-            input.addEventListener('keyup', handleEvent);
-
-            return x;
-        }
-
-    function createRadioValidator(name) {
-            var input = $("[name="+name+"]");
-            var error = document.getElementById(name + "_error");
-
-            var x = {
-                input: input,
-                error: error,
-                valid: false
-            };
-            
-            function handleEvent(event) {
-                x.valid = $("[name=gender").val() != "";
-                updateState();
-            }
-
-            input.on("change", handleEvent);
-            return x;
-        }
-
         function updateState() {
             MRN.error.style.display = MRN.valid ? 'none' : 'block';
             name.error.style.display = name.valid ? 'none' : 'block';
@@ -236,22 +198,12 @@
             submit.disabled = !MRN.valid || !name.valid || !firstName.valid || !gender.valid || !birthdate.valid || !diagnose.valid;
         }
 
-        var MRN = createValidator("MRN");
-        var name = createValidator("name");
-        var firstName = createValidator("first_name");
-        var gender = createValidator($("[name=gender]").is(":checked"));
-        var birthdate = createValidator("birthdate");
-        var diagnose = createValidator("diagnose");
-
-                    $(".radio-group input").click(function(){
-                    var doc = [];
-                    $(".radio-group input:checked").each(function(index) {
-                        var id = $(this).closest(".radio-group").attr('_id');
-                        doc.push(id);
-                    });
-                    console.log(doc);
-    
-});       
+        var MRN = createValidator("MRN", updateState);
+        var name = createValidator("name", updateState);
+        var firstName = createValidator("first_name", updateState);
+        var gender = createRadioValidator("gender", updateState);
+        var birthdate = createValidator("birthdate", updateState);
+        var diagnose = createValidator("diagnose", updateState);
 
     })();
 

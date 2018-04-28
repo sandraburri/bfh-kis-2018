@@ -31,6 +31,9 @@ EOT;
     $stmt->bindParam(":patient_id", $patientID, PDO::PARAM_INT);
     $stmt->execute();
     $rows = $stmt->fetchAll();
+
+    echo '<table class="table">';
+            echo '<tbody>';
     
     // kontrolliert ob die Anzahl Zeilen = 1 ist
     $exists = count($rows) == 1;
@@ -50,7 +53,10 @@ EOT;
             echo 'Geburtsdatum: ' . $row['birthdate'] .'<br />';
             echo 'Diagnose: ' . $row['diagnose'] .'<br />';
         }
-    $dbh = null;
+
+        echo '</tbody>';
+        echo '</table>';
+
     }
 }
 catch(PDOException $e) {

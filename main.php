@@ -62,8 +62,6 @@ if(!$logged){
         } else { 
             $message= "Login not possible";
         }
-
-      $dbh = null;
     }
   }
   catch(PDOException $e)

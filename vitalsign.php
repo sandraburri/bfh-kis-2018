@@ -220,7 +220,6 @@ try {
 
     echo "</div>";
     
-        $dbh = null;
     }
 
 catch(PDOException $e) {
