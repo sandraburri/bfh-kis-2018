@@ -11,7 +11,7 @@
 
     include('pdo.inc.php');
     include("_header.php");
-
+    
     if(isset($_POST['MRN'])){
         $MRN = $_POST['MRN'];
         $name = $_POST['name'];
@@ -25,20 +25,57 @@
         VALUES
         (NULL, :MRN, :name, :first_name, , :gender, :birthdate, :diagnose)";
 
-        $statement0 = $dbh->prepare($sql);
-        $statement0->bindParam(':MRN', $MRN, PDO::PARAM_INT);
-        $statement0->bindParam(':name', $name, PDO::PARAM_STR);
-        $statement0->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-        $statement0->bindParam(':gender', $gender, PDO::PARAM_INT);
-        $statement0->bindParam(':birthdate', $birthdate, PDO::PARAM_INT);
-        $statement0->bindParam(':diagnose', $diagnose, PDO::PARAM_STR);
-        $result0 = $statement0->execute();
+        $statement = $dbh->prepare($sql);
+        $statement->bindParam(':MRN', $MRN, PDO::PARAM_INT);
+        $statement->bindParam(':name', $name, PDO::PARAM_STR);
+        $statement->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+        $statement->bindParam(':gender', $gender, PDO::PARAM_INT);
+        $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_INT);
+        $statement->bindParam(':diagnose', $diagnose, PDO::PARAM_STR);
+        $result = $statement->execute();
+        if (!$result) {
+            $error = $stmt->errorInfo()[2];
+            echo $error;
+        }
+
+        // $staffID = $dbh->lastInsertId(); // weiss ich nicht genau was das macht, bitte erklären
+        
+        header("Location: newPatients.php");        
     }
+
+    echo '<h2>Patientenliste<br></h2>';
+    
+    $sql = "SELECT
+            name,
+            first_name
+        FROM
+            patients
+        ORDER BY
+            `name`
+        ASC    ";
+        
+            $statement = $dbh->prepare($sql);
+            $result = $statement->execute();
+            
+        echo '<table>';
+            echo '<tbody>';
+
+        while($line = $statement->fetch()){
+           $name = $line['name'];
+           $firstName = $line['first_name'];
+                echo '<tr>';
+        echo '<td> '.$line['name'].' </td>';
+        echo '<td> '.$line['first_name'].' </td>';
+        echo '</tr>'; 
+    }
+    
+        echo '</tbody>';
+        echo '</table>';
 ?>
 
 <div class="patient-form">
 
-Neue Patienten erfassen:<br> <br>
+<h2><br>Neue Patienten erfassen:<br></h2>
 
 <div>
     <form method="POST" class="form-horizontal">
@@ -100,7 +137,8 @@ Neue Patienten erfassen:<br> <br>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio"name="gender" id="gender-f" class="custom-control-input" value="2">
                   <label class="custom-control-label" for="gender-f">F</label>
-                </div>
+                  </div>
+                <div class="validation-message" id="functionID_error">Bitte Funktion wählen</div>
             </div>
         </div>
         
@@ -135,17 +173,11 @@ Neue Patienten erfassen:<br> <br>
             </div>
         </div>
         
-         <input type="submit" value="speichern" class="btn btn-violet" />
+        <input type="submit" value="speichern" class="btn btn-violet" id="submit"/>
 
     </form>
     </div>
 </div>
-
-<br />
-<i><a href="newStaff.php">Neue Mitarbeiter erfassen</a></i>
-<br />
-<i><a href="newMedicaments.php">Neue Medikamente erfassen</a></i>
-
 
 <script type="text/javascript">
     (function() {
@@ -175,6 +207,25 @@ Neue Patienten erfassen:<br> <br>
             return x;
         }
 
+    function createRadioValidator(name) {
+            var input = $("[name="+name+"]");
+            var error = document.getElementById(name + "_error");
+
+            var x = {
+                input: input,
+                error: error,
+                valid: false
+            };
+            
+            function handleEvent(event) {
+                x.valid = $("[name=gender").val() != "";
+                updateState();
+            }
+
+            input.on("change", handleEvent);
+            return x;
+        }
+
         function updateState() {
             MRN.error.style.display = MRN.valid ? 'none' : 'block';
             name.error.style.display = name.valid ? 'none' : 'block';
@@ -188,13 +239,19 @@ Neue Patienten erfassen:<br> <br>
         var MRN = createValidator("MRN");
         var name = createValidator("name");
         var firstName = createValidator("first_name");
+        var gender = createValidator($("[name=gender]").is(":checked"));
         var birthdate = createValidator("birthdate");
         var diagnose = createValidator("diagnose");
-        
-                $("[name=gender]").is(":checked");
-                
-                $('.radio-group input:checked').each(function() {$(this).attr('gender');});
 
+                    $(".radio-group input").click(function(){
+                    var doc = [];
+                    $(".radio-group input:checked").each(function(index) {
+                        var id = $(this).closest(".radio-group").attr('_id');
+                        doc.push(id);
+                    });
+                    console.log(doc);
+    
+});       
 
     })();
 
