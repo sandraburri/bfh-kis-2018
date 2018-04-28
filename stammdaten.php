@@ -38,20 +38,21 @@ EOT;
     // kontrolliert ob die Anzahl Zeilen = 1 ist
     $exists = count($rows) == 1;
     
+    function printRow($label, $text) {
+        echo '<tr>';
+        echo '<td>'.$label.' </td>';
+        echo '<td>'.$text.' </td>';
+        echo '</tr>'; 
+    }
+
     if (!$exists) {    // falls dies NICHT der Fall ist
         echo "Diese Patienten-ID existiert nicht <br />";
     } else {
-        foreach ($rows as $row){
-            echo 'MRN: ' . $row['MRN'] .'<br />';
-            echo 'Geschlecht: ';
-            if ($row['gender'] == 1){
-                echo 'männlich' . '<br />'; 
-            }
-            else {
-                echo 'weiblich' .'<br />'; 
-            }
-            echo 'Geburtsdatum: ' . $row['birthdate'] .'<br />';
-            echo 'Diagnose: ' . $row['diagnose'] .'<br />';
+        foreach ($rows as $row) {
+            printRow("MRN:", $row["MRN"]);
+            printRow("Geschlecht:", $row['gender'] == 1 ? "Männlich" : "Weiblich");
+            printRow("Geburtsdatum:", $row["birthdate"]);
+            printRow("Diagnose:", $row["diagnose"]);
         }
 
         echo '</tbody>';
