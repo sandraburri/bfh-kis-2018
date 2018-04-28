@@ -30,11 +30,11 @@ try {
         VALUES
         (NULL, :patientID, :signID, :value, CURRENT_TIMESTAMP, '')";
 
-        $statement0 = $dbh->prepare($sql);
-        $statement0->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-        $statement0->bindParam(':signID', $signID, PDO::PARAM_INT);
-        $statement0->bindParam(':value', $value, PDO::PARAM_STR);
-        $result0 = $statement0->execute();
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+        $stmt->bindParam(':signID', $signID, PDO::PARAM_INT);
+        $stmt->bindParam(':value', $value, PDO::PARAM_STR);
+        $result = $stmt->execute();
 
         header("Location: vitalsign.php?id=$patientID&show=$show");
     }
@@ -55,9 +55,9 @@ try {
                 AND patient.patientID = :patientID
                 ORDER BY `time` DESC";
 
-    $statement = $dbh->prepare($sql);
-    $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
-    $result = $statement->execute();
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+    $result = $stmt->execute();
 
     echo "<div class='row'>";
     echo "<div class='col-md-12 filter-buttons'>";
@@ -115,7 +115,7 @@ try {
         return $slot;
     }
 
-    while($line = $statement->fetch()){
+    while($line = $stmt->fetch()){
         $class = $line['sign_name'];
         $class = strtolower($class);
         $class = str_replace(' ', '_', $class);
