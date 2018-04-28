@@ -72,11 +72,6 @@
     </div>
 </div>
 
-<br />
-<i><a href="newStaff.php">Neue Mitarbeiter erfassen</a></i>
-<br />
-<i><a href="newPatients.php">Neue Patienten erfassen</a></i>
-
 <script type="text/javascript">
     (function() {
         var submit = document.getElementById("submit");
