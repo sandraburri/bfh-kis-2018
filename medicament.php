@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['user'])){
-  header("Location:     main.php");
+  header("Location: main.php");
   exit();
 }
 
@@ -82,7 +82,7 @@ try {
     $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
     $result = $statement->execute();
 
-    echo '<h2>Medikamentenübersicht:<br></h2>';
+    echo '<h2>Verschriebene Medikamente:</h2>';
     echo '<div id="medicine" class="medicine">';
     
     echo '<form method="POST" id="quantity_form" class="form-horizontal">';
@@ -115,7 +115,7 @@ try {
         var_dump($e); 
     }
 
-     echo '<h2><br>Details:<br></h2>';
+     echo '<h2><br>Verabreichte Medikamente:<br></h2>';
 
 try {
 
@@ -175,7 +175,7 @@ try {
         echo '</tr>';
     }
     echo '<tr>';
-        echo '<td colspan=5> <h2>Medikament hinzufügen:</h2></td>';
+        echo '<td colspan=5> <h2>Medikament verabreichen:</h2></td>';
         echo '</tr>';
 
         echo '<tr class="inline-form">';
@@ -206,7 +206,9 @@ try {
             echo '<td>';
                 echo '<select name="nurse">';
                 foreach ($nurses as $id => $name) {
-                    echo '<option value="'.$id.'"> '.$name.' </option>';
+                    $selected = $_SESSION['staffID'] == $id ? ' selected="selected"' : '';
+
+                    echo '<option value="'.$id.'"'.$selected.'> '.$name.' </option>';
                 }
                 echo '</select>';
             echo '</td>';
@@ -229,14 +231,6 @@ catch(PDOException $e) {
 
         $dbh = null;
 ?>
-
-<i><a href="medicamentPrescription.php?id=<?php echo $patientID ?>">neues Medikament verschreiben</a></i>
-<br />
-<i><a href="vitalsign.php?id=<?php echo $patientID ?>">zu den Vitalzeichen</a></i>
-<br />
-<i><a href="stammdaten.php?id=<?php echo $patientID ?>">zu den Stammdaten</a></i>
-<br />
-<i><a href="listPatients.php">zur Patientenliste</a></i>
 
 <script type="text/javascript">
 
