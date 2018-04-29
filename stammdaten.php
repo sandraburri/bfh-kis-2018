@@ -9,6 +9,8 @@ if(!isset($_SESSION['user'])){
   exit();
 }
 
+$pageTitle = "Stammdaten";
+
 include('pdo.inc.php');
 include("_header.php");
 include("_patientName.php");

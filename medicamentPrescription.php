@@ -76,6 +76,8 @@ try {
         $medicaments[$line['medicamentID']] = $line['medicament_name'];
     }
     
+    $pageTitle = "Neues Medikament verschreiben";
+
     include("_header.php");
     include("_patientName.php");
 

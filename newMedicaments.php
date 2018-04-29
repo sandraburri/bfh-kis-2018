@@ -7,6 +7,8 @@
       exit();
     }
 
+    $pageTitle = "Neues Medikament erfassen";
+
     include('pdo.inc.php');
     include("_header.php");
 

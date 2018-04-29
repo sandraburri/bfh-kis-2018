@@ -9,6 +9,7 @@ if(!isset($_SESSION['user'])){
   exit();
 }
 
+$pageTitle = "Vitalzeichen";
 include('pdo.inc.php');
 include("_header.php");
 include("_patientName.php");

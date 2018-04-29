@@ -7,12 +7,13 @@ if(!isset($_SESSION['user'])){
   exit();
 }
 
+$pageTitle = "Patientenliste";
 include('pdo.inc.php');
 include("_header.php");
 
 try {
     /*** echo a message saying we have connected ***/
-    echo '<h1>Patientenliste</h1>';
+    echo '<h1>'.$pageTitle.'</h1>';
     $sql = "select * from patient";
 
     $result = $dbh->query($sql);

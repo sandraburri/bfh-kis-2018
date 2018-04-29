@@ -44,6 +44,8 @@ if(isset($_POST['medicamentID'])){
     }
 }
 
+$pageTitle = "Medikamente";
+
 include("_header.php");
 include("_patientName.php");
 

@@ -73,7 +73,10 @@ if(!$logged){
 // the form is only displayed if the person is not logged.
 if(!$logged) {
 ?>
-<?php include("_header.php"); ?>
+<?php 
+$pageTitle = "Login";
+include("_header.php"); 
+?>
 
 <div class="login-form">
     <h1>Bitte loggen Sie sich ein</h1>

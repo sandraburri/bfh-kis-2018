@@ -9,6 +9,7 @@
       exit();
     }
 
+    $pageTitle = "Neuer Patient erfassen";
     include('pdo.inc.php');
     include("_header.php");
     
@@ -42,7 +43,7 @@
         }       
     }
 
-    echo '<h2>Patientenliste<br></h2>';
+    echo '<h2>Patientenliste</h2>';
     
     $sql = "SELECT
             name,
